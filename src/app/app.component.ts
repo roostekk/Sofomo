@@ -24,13 +24,14 @@ export class AppComponent {
   }
 
   setBgColor(person: Person): Object {
-    if (Number(person.mass) < 16) {
+    const BMI = Number(person.mass) / Math.sqrt(Number(person.height) / 100);
+    if (BMI < 16) {
       return {'background-color': 'black'}
-    } else if (Number(person.mass) >= 16 && Number(person.mass) < 25) {
+    } else if (BMI >= 16 && BMI < 25) {
       return {'background-color': 'green'}
-    } else if (Number(person.mass) >= 25 && Number(person.mass) < 40) {
+    } else if (BMI >= 25 && BMI < 40) {
       return {'background-color': 'orange'}
-    } else if (Number(person.mass) >= 40) {
+    } else if (BMI >= 40) {
       return {'background-color': 'red'}
     }
   }
