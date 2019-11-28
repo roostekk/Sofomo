@@ -45,17 +45,21 @@ export class AppComponent {
   ) {
     this.people$ = dataService.getPeople().pipe(
       map(item => {
-        item.map(e => e.birth_year = e.birth_year.replace('BBY', ''));
-        item.sort((a, b) => Number(a.birth_year) > Number(b.birth_year) ? 1 : -1);
+        item.map(e => {
+          e.mass = +e.mass;
+          e.height = +e.height;
+          e.birth_yearNo = +e.birth_year.replace('BBY', '');
+        });
+        item.sort((a, b) => a.birth_yearNo - b.birth_yearNo);
         return item;
       }),
     );
   }
 
   setBgColor(person: Person): string {
-    const BMI = Number(person.mass) / Math.sqrt(Number(person.height) / 100);
+    const BMI = person.mass / Math.sqrt(person.height / 100);
     if (BMI < 16) {
-      return 'black';
+      return 'blue';
     } else if (BMI >= 16 && BMI < 25) {
       return 'green';
     } else if (BMI >= 25 && BMI < 40) {

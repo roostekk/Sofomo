@@ -10,7 +10,7 @@ export class PersonPipe implements PipeTransform {
     return people.filter(e =>
       (!filter.minYear && !filter.maxYear) ?
         e.birth_year === 'unknown' :
-        Number(e.birth_year) > filter.minYear && (filter.maxYear ? Number(e.birth_year) <= filter.maxYear : true)
+        e.birth_yearNo > filter.minYear && (filter.maxYear ? e.birth_yearNo <= filter.maxYear : true)
     );
   }
 }
