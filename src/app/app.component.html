@@ -1,72 +1,18 @@
-<div class="people-table" *ngIf="people; else loading">
-  <div class="people-table__column">
+<div class="people-table" *ngIf="(people$ | async) as people; else loading">
+  <div class="people-table__column" *ngFor="let date of dateRange">
     <div class="people-table__cell people-table__cell--header">
-      0-20 BBY
+      <ng-container *ngIf="date.max; else noMaxDate">
+        {{date.min !== 0 ? date.min + 1 : date.min}} - {{date.max}}
+      </ng-container>
+      <ng-template #noMaxDate>
+        {{date.min}} +
+      </ng-template>
+      <span>BBY</span>
     </div>
     <div class="people-table__column-content">
       <div class="people-table__cell people-table__cell--person"
-           *ngFor="let person of people | person: {minYear: 0, maxYear: 20}"
-           [ngStyle]="person.mass && person.height ? setBgColor(person): null">
-        {{person.name}}
-      </div>
-    </div>
-  </div>
-  <div class="people-table__column">
-    <div class="people-table__cell people-table__cell--header">
-      21-40 BBY
-    </div>
-    <div class="people-table__column-content">
-      <div class="people-table__cell people-table__cell--person"
-           *ngFor="let person of people | person: {minYear: 20, maxYear: 40}"
-           [ngStyle]="person.mass && person.height ? setBgColor(person): null">
-        {{person.name}}
-      </div>
-    </div>
-  </div>
-  <div class="people-table__column">
-    <div class="people-table__cell people-table__cell--header">
-      41-60 BBY
-    </div>
-    <div class="people-table__column-content">
-      <div class="people-table__cell people-table__cell--person"
-           *ngFor="let person of people | person: {minYear: 40, maxYear: 60}"
-           [ngStyle]="person.mass && person.height ? setBgColor(person): null">
-        {{person.name}}
-      </div>
-    </div>
-  </div>
-  <div class="people-table__column">
-    <div class="people-table__cell people-table__cell--header">
-      61-80 BBY
-    </div>
-    <div class="people-table__column-content">
-      <div class="people-table__cell people-table__cell--person"
-           *ngFor="let person of people | person: {minYear: 60, maxYear: 80}"
-           [ngStyle]="person.mass && person.height ? setBgColor(person): null">
-        {{person.name}}
-      </div>
-    </div>
-  </div>
-  <div class="people-table__column">
-    <div class="people-table__cell people-table__cell--header">
-      81-100 BBY
-    </div>
-    <div class="people-table__column-content">
-      <div class="people-table__cell people-table__cell--person"
-           *ngFor="let person of people | person: {minYear: 80, maxYear: 100}"
-           [ngStyle]="person.mass && person.height ? setBgColor(person): null">
-        {{person.name}}
-      </div>
-    </div>
-  </div>
-  <div class="people-table__column">
-    <div class="people-table__cell people-table__cell--header">
-      100+ BBY
-    </div>
-    <div class="people-table__column-content">
-      <div class="people-table__cell people-table__cell--person"
-           *ngFor="let person of people | person: {minYear: 100}"
-           [ngStyle]="person.mass && person.height ? setBgColor(person): null">
+           *ngFor="let person of people | person: {minYear: date.min, maxYear: date.max}"
+           [ngStyle]="person.mass && person.height && {'background-color': setBgColor(person)}">
         {{person.name}}
       </div>
     </div>
@@ -78,7 +24,7 @@
     <div class="people-table__column-content">
       <div class="people-table__cell people-table__cell--person"
            *ngFor="let person of people | person: {}"
-           [ngStyle]="person.mass && person.height ? setBgColor(person): null">
+           [ngStyle]="person.mass && person.height && {'background-color': setBgColor(person)}">
         {{person.name}}
       </div>
     </div>
