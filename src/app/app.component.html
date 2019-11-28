@@ -23,7 +23,7 @@
     </div>
     <div class="people-table__column-content">
       <div class="people-table__cell people-table__cell--person"
-           *ngFor="let person of people | person: {}"
+           *ngFor="let person of people | person: {minYear: null}"
            [ngStyle]="person.mass && person.height && {'background-color': setBgColor(person)}">
         {{person.name}}
       </div>
